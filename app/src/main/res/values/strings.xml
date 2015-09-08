@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SurfaceView</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <color name="test" >#0000ff</color>
+</resources>

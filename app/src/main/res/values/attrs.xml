@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="PreviewBorderView">
+        <attr name="tipText" format="string"/>
+        <attr name="tipTextColor" format="color|reference"/>
+        <attr name="tipTextSize" format="dimension"/>
+    </declare-styleable>
+</resources>
