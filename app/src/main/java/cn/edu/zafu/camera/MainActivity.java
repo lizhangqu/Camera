@@ -128,11 +128,11 @@ public class MainActivity extends Activity {
             });
             //进行包装，使其支持进度回调
             final Request request = new Request.Builder()
-                    .header("Host", "ocr.ccyunmai.com")
-                    .header("Origin", "http://ocr.ccyunmai.com")
-                    .header("Referer", "http://ocr.ccyunmai.com/idcard/")
+                    .header("Host", "ocr.ccyunmai.com:8080")
+                    .header("Origin", "http://ocr.ccyunmai.com:8080")
+                    .header("Referer", "http://ocr.ccyunmai.com:8080/idcard/")
                     .header("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2398.0 Safari/537.36")
-                    .url("http://ocr.ccyunmai.com/UploadImg.action")
+                    .url("http://ocr.ccyunmai.com:8080/UploadImage.action")
                     .post(progressRequestBody)
                     .build();
             //开始请求
@@ -146,45 +146,11 @@ public class MainActivity extends Activity {
                 public void onResponse(Call call, Response response) throws IOException {
                     String result = response.body().string();
                     Document parse = Jsoup.parse(result);
-                    Elements select = parse.select("div.left fieldset");
-                    Log.e("TAG", select.text());
-                    Document parse1 = Jsoup.parse(select.text());
-                    StringBuilder builder = new StringBuilder();
-                    String name = parse1.select("name").text();
-                    String cardno = parse1.select("cardno").text();
-                    String sex = parse1.select("sex").text();
-                    String folk = parse1.select("folk").text();
-                    String birthday = parse1.select("birthday").text();
-                    String address = parse1.select("address").text();
-                    String issue_authority = parse1.select("issue_authority").text();
-                    String valid_period = parse1.select("valid_period").text();
-                    builder.append("name:" + name)
-                            .append("\n")
-                            .append("cardno:" + cardno)
-                            .append("\n")
-                            .append("sex:" + sex)
-                            .append("\n")
-                            .append("folk:" + folk)
-                            .append("\n")
-                            .append("birthday:" + birthday)
-                            .append("\n")
-                            .append("address:" + address)
-                            .append("\n")
-                            .append("issue_authority:" + issue_authority)
-                            .append("\n")
-                            .append("valid_period:" + valid_period)
-                            .append("\n");
-                    Log.e("TAG", "name:" + name);
-                    Log.e("TAG", "cardno:" + cardno);
-                    Log.e("TAG", "sex:" + sex);
-                    Log.e("TAG", "folk:" + folk);
-                    Log.e("TAG", "birthday:" + birthday);
-                    Log.e("TAG", "address:" + address);
-                    Log.e("TAG", "issue_authority:" + issue_authority);
-                    Log.e("TAG", "valid_period:" + valid_period);
+                    Elements select = parse.select("div#ocrresult");
+                    Log.e("TAG", "select：" + select.text());
                     Message obtain = Message.obtain();
                     obtain.what = UPDATE_TEXTVIEW;
-                    obtain.obj = builder.toString();
+                    obtain.obj = select.text();
                     mHandler.sendMessage(obtain);
                 }
             });
