@@ -115,8 +115,8 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         mLinearLayout.setLayoutParams(linearLayoutParams);
 
 
-        Log.e("TAG","Screen width:"+heightPixels * 4 / 3);
-        Log.e("TAG","Screen height:"+heightPixels);
+        Log.e("TAG", "Screen width:" + heightPixels * 4 / 3);
+        Log.e("TAG", "Screen height:" + heightPixels);
 
     }
 
@@ -177,7 +177,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             // 创建一个handler来打开预览，并抛出一个运行时异常
             cameraManager.startPreview();
         } catch (Exception ioe) {
-
+            ioe.printStackTrace();
         }
     }
 
@@ -209,15 +209,15 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             int height = bitmap.getHeight();
             int width = bitmap.getWidth();
             final Bitmap bitmap1 = Bitmap.createBitmap(bitmap, (width - height) / 2, height / 6, height, height * 2 / 3);
-            Log.e("TAG","width:"+width+" height:"+height);
-            Log.e("TAG","x:"+(width - height) / 2+" y:"+height / 6+" width:"+height+" height:"+height * 2 / 3);
+            Log.e("TAG", "width:" + width + " height:" + height);
+            Log.e("TAG", "x:" + (width - height) / 2 + " y:" + height / 6 + " width:" + height + " height:" + height * 2 / 3);
             // 创建一个位于SD卡上的文件
 
-            File path=new File(filePath);
-            if (!path.exists()){
+            File path = new File(filePath);
+            if (!path.exists()) {
                 path.mkdirs();
             }
-            File file = new File(path, type+"_"+fileName);
+            File file = new File(path, type + "_" + fileName);
 
             FileOutputStream outStream = null;
             try {
@@ -263,8 +263,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
      */
     public int getScreenHeight(Context context) {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        return dm.heightPixels-getStatusBarHeight(context);
+        return dm.heightPixels - getStatusBarHeight(context);
     }
+
     /**
      * 获取通知栏高度
      *

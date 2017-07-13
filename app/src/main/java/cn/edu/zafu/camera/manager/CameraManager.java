@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * User:lizhangqu(513163535@qq.com)
@@ -86,7 +87,21 @@ public class CameraManager {
         if (!initialized) {
             initialized = true;
             parameters = camera.getParameters();
-            parameters.setPreviewSize(800, 600);
+            List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
+
+            int w = 800;
+            int h = 600;
+            for (Camera.Size size : previewSizes) {
+                Log.e("TAG", "previewSizes width:" + size.width);
+                Log.e("TAG", "previewSizes height:" + size.height);
+                if (size.width - w <= 100) {
+                    w = size.width;
+                    h = size.height;
+                    break;
+                }
+            }
+
+            parameters.setPreviewSize(w, h);
             parameters.setPictureFormat(ImageFormat.JPEG);
             parameters.setJpegQuality(100);
             parameters.setPictureSize(800, 600);
